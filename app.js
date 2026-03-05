@@ -3,8 +3,8 @@ const mongoose = require("mongoose")
 const ejs= require("ejs")
 const app = express()
 const Mngo_url ="mongodb://127.0.0.1:27017/wandernest"
+const path = require("path");
 const Listing = require("./models/listing")
-
 
 async function main(){
     await mongoose.connect(Mngo_url)
@@ -21,19 +21,35 @@ app.get("/",(req,res)=>{
     res.send("hi i am root ")
 })
 
-app.get("/testListing", async(req,res)=>{
-    let sampleListing = new Listing({
-        title:"my new villa",
-        description:"by the beach",
-        price:2000,
-        location:"calangute goa",
-        country:"India"
-    });
+// app.get("/testListing", async(req,res)=>{
+//     let sampleListing = new Listing({
+//         title:"my new villa",
+//         description:"by the beach",
+//         price:2000,
+//         location:"calangute goa",
+//         country:"India"
+//     });
 
-    await sampleListing.save();
-    console.log("sample was saved");
-    res.send("sample was saved");
+//     await sampleListing.save();
+//     console.log("sample was saved");
+//     res.send("sample was saved");
+// })
+
+app.set("view engine" ,"ejs");
+app.set("views" , path.join(__dirname,"views"))
+app.use(express.urlencoded({extended:true}))
+
+app.get("/listings", async (req,res)=>{
+const allListing = await Listing.find({})
+res.render("listings/index.ejs",{allListing})
 })
+
+app.get("/listings/:id", async(req,res)=>{
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listings/show.ejs", {listing})
+})
+
 
 app.listen(1000,()=>{
     console.log("app is listen port 1000")
