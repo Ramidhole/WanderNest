@@ -1,5 +1,6 @@
 body{
-    background-color: pink;
+    background-color: pink ;
+
     
   font-family: 'Inter', sans-serif;
 }
@@ -69,4 +70,27 @@ background: white;
 .card-img-overlay:hover{
     opacity: 0.2;
     background-color: white;
+}
+
+.delete-btn{
+   background-color: #fe424d !important;
+border: none !important;
+}
+
+.edit-btn{
+   background-color: #fe424d !important;
+      border: none !important;
+}
+
+.show-img{
+   height: 30vh;
+}
+
+.btns{
+   display: flex;
+}
+
+.show-card{
+   padding-left: o;
+   padding-right: 0;
 }
